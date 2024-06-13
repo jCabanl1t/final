@@ -10,7 +10,22 @@ let menu = {
         { drink: "coke", price: "$3" },
         { drink: "pepsi", price: "$3" },
         { drink: "fanta", price: "$3" }
+    ],
+
+    appetizers: [
+        { appetizer: "Pork Gyoza", price: "$5" },
+        { appetizer: "calamari Tempura", price: "$5" },
+        { appetizer: "Lumpia", price: "$4" }
+
+
+    ],
+
+    bar: [
+        { alcohol: "draft beer", price: "$"},
+        { alcohol: "sake", price: "$"},
+        { alcohol: "craft cocktails", price: "$"}
     ]
+
 }
 
 let jsonString = JSON.stringify(menu);
@@ -75,6 +90,66 @@ for (let i = 0; i < menu.drinks.length; i++) {
     const cell2 = document.createElement("td");
     cell2.classList.add("left")
     cell2.textContent = menu.drinks[i].price;
+    row.appendChild(cell2);
+
+    table.appendChild(row);
+}
+
+const appetizers_Header = document.createElement("tr");
+const header5 = document.createElement("th")
+header5.classList.add("left")
+header5.textContent = "Appetizers";
+
+appetizers_Header.appendChild(header5);
+
+const header6 = document.createElement("th")
+header6.classList.add("right")
+header6.textContent = "Price";
+
+appetizers_Header.appendChild(header6);
+table.appendChild(appetizers_Header);
+
+for (let i = 0; i < menu.appetizers.length; i++) {
+    const row = document.createElement("tr");
+
+    const cell1 = document.createElement("td");
+    cell1.classList.add("left")
+    cell1.textContent = menu.appetizers[i].appetizer;
+    row.appendChild(cell1);
+
+    const cell2 = document.createElement("td");
+    cell2.classList.add("left")
+    cell2.textContent = menu.appetizers[i].price;
+    row.appendChild(cell2);
+
+    table.appendChild(row);
+}
+
+const bar_Header = document.createElement("tr");
+const header7 = document.createElement("th")
+header7.classList.add("left")
+header7.textContent = "Alcohol";
+
+bar_Header.appendChild(header7);
+
+const header8 = document.createElement("th")
+header8.classList.add("right")
+header8.textContent = "Price";
+
+bar_Header.appendChild(header8);
+table.appendChild(bar_Header);
+
+for (let i = 0; i < menu.bar.length; i++) {
+    const row = document.createElement("tr");
+
+    const cell1 = document.createElement("td");
+    cell1.classList.add("left")
+    cell1.textContent = menu.bar[i].alcohol;
+    row.appendChild(cell1);
+
+    const cell2 = document.createElement("td");
+    cell2.classList.add("left")
+    cell2.textContent = menu.bar[i].price;
     row.appendChild(cell2);
 
     table.appendChild(row);

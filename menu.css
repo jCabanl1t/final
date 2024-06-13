@@ -49,3 +49,15 @@ tr:hover {
 .right {
     width: 30%;
 }
+
+#item-images {
+    margin-top: 20px;
+}
+
+#item-images div {
+    display: none;
+}
+
+#item-images img {
+    max-width: 100%;
+}
