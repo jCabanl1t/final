@@ -1,156 +1,76 @@
-// Define JSON Payload
-let menu = {
-    ramen: [
-        { food: "Miso Ramen", price: "$10" },
-        { food: "Tonkotsu Ramen", price: "$7" },
-        { food: "Shoyu Ramen", price: "$10" }
-    ],
+$(document).ready(function() {
+    let menu = {
+        ramen: [
+            { food: "Miso Ramen", description: "pork, chicken, miso broth with chashu pork, menma, bean sprout, scallion, wakame, and egg", price: "$10" },
+            { food: "Tonkotsu Ramen", description: "pork & chicken broth with chashu pork, menma, bean sprout, scallion, egg, and black garlic oil", price: "$7" },
+            { food: "Shoyu Ramen", description: "pork, chicken, shoyu broth with kurobuta pork, menma, bean sprout, scallion, wakame, and egg", price: "$10" },
+            { food: "Kurobuta Ramen", description: "pork & chicken broth with mild spicy, kurobuta pork, menma, bean sprout, scallion, wakame, and egg", price: "$8"},
+            { food: "Karai Gyuniku", description: "spicy beef broth with egg, bean sprout, gyuniku beef, and scallions", price: "$10"},
+            { food: "Tan Tan Ramen", description: "pork & chicken spicy broth with spicy ground pork, scallion, and egg", price: "$10"}
+        ],
+        drinks: [
+            { drink: "Coke", price: "$3" },
+            { drink: "Pepsi", price: "$3" },
+            { drink: "Fanta", price: "$3" },
+            { drink: "Dr. Pepper", price: "$3"},
+            { drink: "Mtn Dew", price: "$3"},
+            { drink: "Sprite", price: "$3"},
+            { drink: "Mug Root Beer", price: "$3"}
+        ],
+        appetizers: [
+            { appetizer: "Pork Gyoza", description: "pork & vegetable dumpling, pan or deep fried", price: "$5" },
+            { appetizer: "Calamari Tempura", description: "deep fried calamari", price: "$5" },
+            { appetizer: "Lumpia", description: "deep fried pork & vegetable roll", price: "$4" },
+            { appetizer: "Aloha Fries", description: "fries topped with kalua pork, kewpie mayo, gochujang aioli, furikake, and sunnyside up egg", price: "$5" },
+            { appetizer: "Sizzling Sisig", description: "deep fried chopped pork belly with onion & peppers", price: "$5" },
+            { appetizer: "Takoyaki", description: "deep fried ball filled with octopus", price: "$5" },
+            { appetizer: "Spam Musubi", description: "grilled spam with a touch of teriyaki sauce, furikake, on rice, wrapped in nori", price: "$4"}
+        ],
+        bar: [
+            { alcohol: "draft beer", price: "$" },
+            { alcohol: "sake", price: "$" },
+            { alcohol: "craft cocktails", price: "$" }
+        ]
+    };
 
-    drinks: [
-        { drink: "coke", price: "$3" },
-        { drink: "pepsi", price: "$3" },
-        { drink: "fanta", price: "$3" }
-    ],
+    function addMenuItems(section, items, itemType) {
+        const sectionBody = $(`#${section}-section tbody`);
+        items.forEach(item => {
+            const row = $("<tr>");
+            const cell1 = $("<td>").addClass("left").html(item[itemType] + (item.description ? `<br><small>${item.description}</small>` : ''));
+            const cell2 = $("<td>").addClass("right").text(item.price);
+            row.append(cell1, cell2);
+            sectionBody.append(row);
+        });
+    }
 
-    appetizers: [
-        { appetizer: "Pork Gyoza", price: "$5" },
-        { appetizer: "calamari Tempura", price: "$5" },
-        { appetizer: "Lumpia", price: "$4" }
+    addMenuItems("ramen", menu.ramen, "food");
+    addMenuItems("drinks", menu.drinks, "drink");
+    addMenuItems("appetizers", menu.appetizers, "appetizer");
+    addMenuItems("bar", menu.bar, "alcohol");
 
+    // Initially hide all sections except headers
+    $("#ramen-section tr:not(#ramen-header)").hide();
+    $("#drinks-section tr:not(#drinks-header)").hide();
+    $("#appetizers-section tr:not(#appetizers-header)").hide();
+    $("#bar-section tr:not(#bar-header)").hide();
 
-    ],
+    // Add click event to headers
+    $("#ramen-header").click(function() {
+        $("#ramen-section tr:not(#ramen-header)").slideToggle();
+    });
 
-    bar: [
-        { alcohol: "draft beer", price: "$"},
-        { alcohol: "sake", price: "$"},
-        { alcohol: "craft cocktails", price: "$"}
-    ]
+    $("#drinks-header").click(function() {
+        $("#drinks-section tr:not(#drinks-header)").slideToggle();
+    });
 
-}
+    $("#appetizers-header").click(function() {
+        $("#appetizers-section tr:not(#appetizers-header)").slideToggle();
+    });
 
-let jsonString = JSON.stringify(menu);
-menu = JSON.parse(jsonString);
+    $("#bar-header").click(function() {
+        $("#bar-section tr:not(#bar-header)").slideToggle();
+    });
 
-const table = document.getElementById("items");
-
-// Loop through all items in the JSON and extract data --> into a table
-
-const ramen_Header = document.createElement("tr");
-const header1 = document.createElement("th")
-header1.classList.add("left")
-header1.textContent = "Ramen";
-
-ramen_Header.appendChild(header1);
-
-const header2 = document.createElement("th")
-header2.classList.add("right")
-header2.textContent = "Price";
-
-ramen_Header.appendChild(header2);
-table.appendChild(ramen_Header);
-
-for (let i = 0; i < menu.ramen.length; i++) {
-    const row = document.createElement("tr");
-
-    const cell1 = document.createElement("td");
-    cell1.classList.add("left")
-    cell1.textContent = menu.ramen[i].food;
-    row.appendChild(cell1);
-
-    const cell2 = document.createElement("td");
-    cell2.classList.add("left")
-    cell2.textContent = menu.ramen[i].price;
-    row.appendChild(cell2);
-
-    table.appendChild(row);
-}
-
-const drink_Header = document.createElement("tr");
-const header3 = document.createElement("th")
-header3.classList.add("left")
-header3.textContent = "Drinks";
-
-drink_Header.appendChild(header3);
-
-const header4 = document.createElement("th")
-header4.classList.add("right")
-header4.textContent = "Price";
-
-drink_Header.appendChild(header4);
-table.appendChild(drink_Header);
-
-for (let i = 0; i < menu.drinks.length; i++) {
-    const row = document.createElement("tr");
-
-    const cell1 = document.createElement("td");
-    cell1.classList.add("left")
-    cell1.textContent = menu.drinks[i].drink;
-    row.appendChild(cell1);
-
-    const cell2 = document.createElement("td");
-    cell2.classList.add("left")
-    cell2.textContent = menu.drinks[i].price;
-    row.appendChild(cell2);
-
-    table.appendChild(row);
-}
-
-const appetizers_Header = document.createElement("tr");
-const header5 = document.createElement("th")
-header5.classList.add("left")
-header5.textContent = "Appetizers";
-
-appetizers_Header.appendChild(header5);
-
-const header6 = document.createElement("th")
-header6.classList.add("right")
-header6.textContent = "Price";
-
-appetizers_Header.appendChild(header6);
-table.appendChild(appetizers_Header);
-
-for (let i = 0; i < menu.appetizers.length; i++) {
-    const row = document.createElement("tr");
-
-    const cell1 = document.createElement("td");
-    cell1.classList.add("left")
-    cell1.textContent = menu.appetizers[i].appetizer;
-    row.appendChild(cell1);
-
-    const cell2 = document.createElement("td");
-    cell2.classList.add("left")
-    cell2.textContent = menu.appetizers[i].price;
-    row.appendChild(cell2);
-
-    table.appendChild(row);
-}
-
-const bar_Header = document.createElement("tr");
-const header7 = document.createElement("th")
-header7.classList.add("left")
-header7.textContent = "Alcohol";
-
-bar_Header.appendChild(header7);
-
-const header8 = document.createElement("th")
-header8.classList.add("right")
-header8.textContent = "Price";
-
-bar_Header.appendChild(header8);
-table.appendChild(bar_Header);
-
-for (let i = 0; i < menu.bar.length; i++) {
-    const row = document.createElement("tr");
-
-    const cell1 = document.createElement("td");
-    cell1.classList.add("left")
-    cell1.textContent = menu.bar[i].alcohol;
-    row.appendChild(cell1);
-
-    const cell2 = document.createElement("td");
-    cell2.classList.add("left")
-    cell2.textContent = menu.bar[i].price;
-    row.appendChild(cell2);
-
-    table.appendChild(row);
-}
+    alert("Welcome to the online restaurant menu!");
+});
